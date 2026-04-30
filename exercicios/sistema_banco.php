@@ -5,12 +5,11 @@ $conta = [
     "saldo" => 1500.00
 ];
 
-echo "--- Sistema Bancário ---" . PHP_EOL;
-echo "Titular: " . $conta["titular"] . PHP_EOL;
-echo "Saldo Inicial: R$ " . number_format($conta["saldo"], 2, ',', '.') . PHP_EOL;
-
 while (true) {
-    echo "\nEscolha uma operação: 1 - Depositar, 2 - Sacar, 3 - Ver saldo, 4 - Sair" . PHP_EOL;
+    echo "\n--- Sistema Bancário ---" . PHP_EOL;
+    echo "Titular: " . $conta["titular"] . PHP_EOL;
+    echo "Saldo Inicial: R$ " . number_format($conta["saldo"], 2, ',', '.') . PHP_EOL;
+    echo "\n\nEscolha uma operação: 1 - Depositar, 2 - Sacar, 3 - Ver saldo, 4 - Sair" . PHP_EOL;
     $opcao = readline("Opção: ");
 
     switch ($opcao) {
@@ -19,6 +18,8 @@ while (true) {
             if ($valor > 0) {
                 $conta["saldo"] += $valor;
                 echo "Depósito de R$ " . number_format($valor, 2, ',', '.') . " realizado com sucesso." . PHP_EOL;
+            } elseif ($valor <= 0) {
+                echo "Valor de depósito deve ser positivo." . PHP_EOL;
             } else {
                 echo "Valor de depósito inválido." . PHP_EOL;
             }
