@@ -96,3 +96,42 @@ $familiares = ["Maria", "João", "Ana"];
 $familiares[] = "Pedro";
 $familiares[] = "Carla";
 echo "\nFamiliares: " . implode(", ", $familiares);
+
+echo"\n\n13 - Escreva uma função em PHP que receba dois números inteiros e uma string representando a operação matemática e retorne o resultado da operação.";
+function calcular(int $num1, int $num2, string $operacao) {
+    switch ($operacao) {
+        case "+":
+            return $num1 + $num2;
+        case "-":
+            return $num1 - $num2;
+        case "*":
+            return $num1 * $num2;
+        case "/":
+            return $num1 / $num2;
+        default:
+            return "Operação inválida";
+    }
+}
+echo "\nExemplo usando os números 10 e 5 com a operação '+'.";
+calcular(10, 5, "+");
+
+echo "\nResultado da operação: " . calcular(10, 5, "+");
+
+echo"\n\n14 - Crie uma função em PHP que calcule o IMC baseado na altura e peso passados por parâmetro.";
+function calcularIMC(float $altura, float $peso): float {
+    return $peso / ($altura * $altura);
+}
+
+$altura = 1.75;
+$peso = 70;
+$imc = calcularIMC($altura, $peso);
+echo "\nExemplo usando altura de " . $altura . " metros e peso de " . $peso . " kg.";
+echo "\nIMC: " . $imc;
+            
+echo"\n\n15 - Crie uma função em PHP que converta graus celsius para Fahrenheit.";
+function celsiusParaFahrenheit(float $celsius): float {
+    return ($celsius * 9/5) + 32;
+}
+$celsius = 25;
+$fahrenheit = celsiusParaFahrenheit($celsius);
+echo "\n" . $celsius . "°C é igual a " . $fahrenheit . "°F.";
