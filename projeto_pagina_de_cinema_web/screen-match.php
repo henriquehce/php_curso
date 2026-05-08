@@ -33,5 +33,5 @@ $genero = match ($nomeFilme) {
     "Se beber não case" => "comédia",
     default => "gênero desconhecido",
 };
-
 echo "O gênero do filme é: $genero\n";
+

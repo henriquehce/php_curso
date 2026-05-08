@@ -135,3 +135,43 @@ function celsiusParaFahrenheit(float $celsius): float {
 $celsius = 25;
 $fahrenheit = celsiusParaFahrenheit($celsius);
 echo "\n" . $celsius . "°C é igual a " . $fahrenheit . "°F.";
+
+echo"\n\n16 - Escreva um programa em PHP que inicialize um array de notas e exiba somente as 3 maiores notas do array.";
+$notas = [8, 7, 9, 6, 10, 5, 8];
+echo "\nArray de notas: " . implode(", ", $notas);
+rsort($notas);
+$maioresNotas = array_slice($notas, 0, 3);
+echo "\nAs 3 maiores notas são: " . implode(", ", $maioresNotas);
+
+echo"\n\n17 - Crie um programa em PHP que transforme a string “Vinicius Dias,1997,Programador” em um array em que cada item está separado por vírgulas.";
+$string = "Vinicius Dias,1997,Programador";
+$array = explode(",", $string);
+echo "\nArray resultante: ";
+print_r($array);
+
+echo"\n\n18 - Escreva uma função em PHP que receba um array de strings por parâmetro e o retorne ordenado em ordem alfabética.";
+function ordenarStrings(array $strings): array {
+    sort($strings);
+    return $strings;
+}
+$frutas = ["banana", "maçã", "laranja", "uva"];
+$frutasOrdenadas = ordenarStrings($frutas);
+echo "\nArray de frutas: " . implode(", ", $frutas);
+echo "\nFrutas ordenadas: " . implode(", ", $frutasOrdenadas);
+
+echo"\n\n19 -Escreva um programa em PHP que abra um arquivo chamado teste.txt para ler a primeira linha e depois o fecha.";
+$arquivo = fopen("teste.txt", "r");
+$primeiraLinha = fgets($arquivo);
+echo "\nPrimeira linha do arquivo: " . $primeiraLinha;
+fclose($arquivo);
+
+echo"\n\n20 - Escreva um programa em PHP que abra o arquivo teste.txt, acrescente a frase “PHP é incrível!” no final do arquivo e depois o feche.";
+$arquivo = fopen("teste.txt", "a");
+fputs($arquivo, " PHP é incrível!\n");
+fclose($arquivo);
+
+echo"\n\n21 - Crie um programa que converta a string '{\"nome\":\"Vinicius\",\"anoNascimento\":1997,\"profissao\":\"Dev\"}' em um objeto.";
+$string = '{"nome":"Vinicius","anoNascimento":1997,"profissao":"Dev"}';
+$objeto = json_decode($string);
+echo "\nObjeto resultante: ";
+print_r($objeto);
