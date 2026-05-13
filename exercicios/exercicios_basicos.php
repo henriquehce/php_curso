@@ -175,3 +175,89 @@ $string = '{"nome":"Vinicius","anoNascimento":1997,"profissao":"Dev"}';
 $objeto = json_decode($string);
 echo "\nObjeto resultante: ";
 print_r($objeto);
+
+echo"\n\n22 - Crie uma enum em PHP com tipos de contas bancárias e implemente um método informando se a conta possui taxas. Contas correntes e de investimento possuem taxas, enquanto contas poupança e universitárias não";
+enum TipoConta {
+    case CORRENTE;
+    case INVESTIMENTO;
+    case POUPANCA;
+    case UNIVERSITARIA;
+
+    public function possuiTaxas(): bool {
+        return match($this) {
+            self::CORRENTE, self::INVESTIMENTO => true,
+            self::POUPANCA, self::UNIVERSITARIA => false,
+        };
+    }
+}
+echo "\nExemplo usando o tipo de conta CORRENTE.";
+$tipoConta = TipoConta::CORRENTE;
+echo "\nA conta do tipo " . $tipoConta->name . " possui taxas? " . ($tipoConta->possuiTaxas() ? "Sim" : "Não");
+
+
+echo"\n\n23 - Crie uma classe que represente uma conta com as propriedades saldo, nome do titular e tipo. Use os tipos e formas de acesso adequadas.";
+class Conta {
+    public function __construct(public readonly string $titular, public float $saldo, public TipoConta $tipo) {
+    }
+}
+echo "\nExemplo usando o titular 'Henrique Cipriani', saldo de 1500.00 e tipo de conta CORRENTE.";
+$conta = new Conta("Henrique Cipriani", 1500.00, TipoConta::CORRENTE);
+echo "\nTitular: " . $conta->titular;
+echo "\nSaldo: " . $conta->saldo;
+echo "\nTipo de conta: " . $conta->tipo->name;
+
+echo"\n\n24 - Crie uma classe ContaBancaria com métodos para realizar operações bancárias como depositar(), sacar() e consultarSaldo().
+Em seguida, crie uma subclasse ContaCorrente que herda da classe ContaBancaria. Adicione um método específico para a subclasse, como cobrarTarifaMensal(),
+que desconta uma tarifa mensal da conta corrente.
+Além disso, no método sacar() da ContaCorrente, cobre uma taxa de saque também. Armazene essa taxa como uma constante da classe.";
+class ContaBancaria {
+    protected float $saldo;
+
+    public function __construct(public readonly string $titular, float $saldoInicial) {
+        $this->saldo = $saldoInicial;
+    }
+
+    public function depositar(float $valor): void {
+        $this->saldo += $valor;
+    }
+
+    public function sacar(float $valor): void {
+        if ($valor > $this->saldo) {
+            echo "\nSaldo insuficiente para saque.";
+        } else {
+            $this->saldo -= $valor;
+        }
+    }
+
+    public function consultarSaldo(): float {
+        return $this->saldo;
+    }
+}
+
+class ContaCorrente extends ContaBancaria {
+    private const TAXA_SAQUE = 5.00;
+    private const TARIFA_MENSAL = 10.00;
+
+    public function cobrarTarifaMensal(): void {
+        $this->saldo -= self::TARIFA_MENSAL;
+    }
+
+    public function sacar(float $valor): void {
+        $valorTotal = $valor + self::TAXA_SAQUE;
+        if ($valorTotal > $this->saldo) {
+            echo "\nSaldo insuficiente para saque.";
+        } else {
+            $this->saldo -= $valorTotal;
+        }
+    }
+}
+
+echo "\nExemplo usando o titular 'Henrique Cipriani' e saldo inicial de 1500.00.";
+$contaCorrente = new ContaCorrente("Henrique Cipriani", 1500.00);
+echo "\nSaldo inicial: " . $contaCorrente->consultarSaldo();
+$contaCorrente->depositar(500.00);
+echo "\nSaldo após depósito de 500.00: " . $contaCorrente->consultarSaldo();
+$contaCorrente->sacar(200.00);
+echo "\nSaldo após saque de 200.00 (com taxa de saque): " . $contaCorrente->consultarSaldo();
+$contaCorrente->cobrarTarifaMensal();
+echo "\nSaldo após cobrança de tarifa mensal: " . $contaCorrente->consultarSaldo();

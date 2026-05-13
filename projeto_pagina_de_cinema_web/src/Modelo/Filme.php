@@ -1,22 +1,13 @@
 <?php
 
-class Filme {
-    private array $notas;
+class Filme extends Midia{
 
-    public function __construct(public readonly string $nome, public readonly int $anoLancamento, public readonly string $genero) {
-        $this->notas = [];
+    public function __construct(public  string $nome, public  int $anoLancamento, public  Genero $genero, public int $duracao) {
+        parent::__construct($nome, $anoLancamento, $genero);
+        $this->duracao = $duracao;
     }
 
-    public function avaliar(float $nota): void {
-        $this->notas[] = $nota;
-    }
-
-    public function calcularMedia(): float {
-        $totalNotas = count($this->notas);
-        if ($totalNotas === 0) {
-            return 0;
-        }
-        $somaNotas = array_sum($this->notas);
-        return $somaNotas / $totalNotas;
+    public function duracaoEmMinutos(): int {
+        return $this->duracao;
     }
 }
